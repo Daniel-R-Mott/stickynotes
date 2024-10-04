@@ -1,15 +1,20 @@
 import React from "react";
 
-const Header = () => {
-    return (
-    <header>
+const Header = (props) => (
+  <header className="app-header">
     <h1 className="app-header__title">Super Sticky Notes</h1>
-    <aside>
-        <button className="app-header__controls, add-new">+ New Note</button>
-        <input className="search" type="text" placeholder="Type here to search..." />
+    <aside className="app-header__controls">
+      <button className="add-new" onClick={props.addNote}>
+        + New Note
+      </button>
+      <input
+        type="text"
+        placeholder="Type here to search..."
+        className="search"
+        value={props.searchText}
+      />
     </aside>
-</header>
-    )
-}
+  </header>
+);
 
 export default Header;
