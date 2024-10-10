@@ -10,6 +10,8 @@ class App extends Component {
     notes: [],
     searchText: "",
   };
+
+  // Create a new note
   addNote = () => {
     const newNote = {
       id: Date.now(),
@@ -43,6 +45,20 @@ class App extends Component {
     });
   };
 
+  // Delete note
+  removeNote = (noteId) => {
+    const updatedNotes = this.state.notes.filter((note) => note.id !== noteId);
+    this.setState({ notes: updatedNotes });
+  };
+
+  componentDidUpdate() {
+    const stringifiedNotes = localStorage.getItem("savedNotes");
+    if (stringifiedNotes) {
+      const savedNotes = JSON.parse(stringifiedNotes);
+      this.setState({ notes: savedNotes });
+    }
+  }
+
   onType = (editMeId, updatedKey, updatedValue) => {
     // editMeId == id of the note that is edited
     // updatedKey == title or description field
@@ -71,7 +87,11 @@ class App extends Component {
           addNote={this.addNote}
           onSearch={this.onSearch}
         />
-        <NotesList notes={this.state.notes} onType={this.onType} />
+        <NotesList
+          removeNote={this.removeNote}
+          notes={this.state.notes}
+          onType={this.onType}
+        />
       </div>
     );
   }
